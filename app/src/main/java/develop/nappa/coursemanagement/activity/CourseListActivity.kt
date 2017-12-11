@@ -1,10 +1,11 @@
-package develop.nappa.coursemanagement
+package develop.nappa.coursemanagement.activity
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import develop.nappa.coursemanagement.R
 
 import kotlinx.android.synthetic.main.activity_course_list.*
 
