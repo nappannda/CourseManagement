@@ -27,4 +27,13 @@ class Course : RealmObject() {
         set(value) {
             statusValue = value.integerValue
         }
+
+    fun statusString(): String {
+        return when (status) {
+            Status.NONE -> "なし"
+            Status.DOING -> "履修中"
+            Status.ENROLLED -> "履修済み"
+            Status.RETAKE -> "再履修"
+        }
+    }
 }
