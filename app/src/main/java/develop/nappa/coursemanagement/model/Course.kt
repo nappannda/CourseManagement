@@ -6,7 +6,7 @@ import java.util.*
 /**
  * Created by nappannda on 2017/12/12.
  */
-class Course : RealmObject() {
+open class Course : RealmObject() {
     var name : String = ""
     var unit : Int = 0
     var attendanceCount : Int = 0
