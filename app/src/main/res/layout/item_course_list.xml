@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="courses"
+            name="course"
             type="develop.nappa.coursemanagement.model.Course" />
     </data>
 
@@ -23,7 +23,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:gravity="center_vertical"
-                android:text="@{courses.name}"
+                android:text="@{course.name}"
                 android:textColor="@android:color/black"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +39,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@{courses.statusString()}"
+                android:text="@{course.statusString()}"
                 android:textColor="@android:color/black"
                 android:textSize="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"

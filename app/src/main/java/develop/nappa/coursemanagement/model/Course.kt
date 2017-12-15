@@ -1,18 +1,21 @@
 package develop.nappa.coursemanagement.model
 
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import java.util.*
 
 /**
  * Created by nappannda on 2017/12/12.
  */
 open class Course : RealmObject() {
-    var name : String = ""
-    var unit : Int = 0
-    var attendanceCount : Int = 0
-    var memo : String = ""
-    var createdAt : Date = Date()
-    var updatedAt : Date = Date()
+    @PrimaryKey
+    open var id : String = ""
+    open var name : String = ""
+    open var unit : Int = 0
+    open var attendanceCount : Int = 0
+    open var memo : String = ""
+    open var createdAt : Date = Date()
+    open var updatedAt : Date = Date()
 
     enum class Status(val integerValue: Int) {
         NONE(1), // なし
@@ -22,7 +25,7 @@ open class Course : RealmObject() {
     }
 
     private var statusValue: Int = Status.NONE.integerValue
-    var status: Status
+    open var status: Status
         get() = Status.values().first { it.integerValue == statusValue }
         set(value) {
             statusValue = value.integerValue

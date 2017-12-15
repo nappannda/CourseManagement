@@ -1,25 +1,60 @@
 package develop.nappa.coursemanagement.activity
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import develop.nappa.coursemanagement.R
-
+import develop.nappa.coursemanagement.databinding.ContentCourseListBinding
+import develop.nappa.coursemanagement.model.Course
+import develop.nappa.coursemanagement.view.CourseListAdapter
+import io.realm.Realm
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_course_list.*
+import java.util.*
 
 class CourseListActivity : AppCompatActivity() {
+
+    private var realm: Realm? = null
+    private var courseList = mutableListOf<Course>()
+    private var listAdapter: CourseListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_course_list)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        val binding : ContentCourseListBinding = DataBindingUtil.setContentView(this, R.layout.content_course_list)
+        listAdapter = CourseListAdapter(this)
+
+        realm = Realm.getDefaultInstance()
+        realm?.beginTransaction()
+        var course = realm?.createObject(Course::class.java, UUID.randomUUID().toString())
+        realm?.commitTransaction()
+        reloadCourseList()
+
+        binding.courseListView.adapter = listAdapter
+        binding.setOnItemClick { adapterView, view, position, l ->
+
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm?.close()
+    }
+
+    private fun reloadCourseList() {
+        courseList.clear()
+        val _realm = realm
+        if (_realm != null) {
+            val result: RealmResults<Course> =  _realm.where(Course::class.java).findAll()
+            for (course in result) {
+                courseList.add(course)
+            }
+        }
+        listAdapter?.courses = courseList
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
