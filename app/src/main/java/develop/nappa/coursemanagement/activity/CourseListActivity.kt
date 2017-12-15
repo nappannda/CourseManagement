@@ -12,7 +12,6 @@ import develop.nappa.coursemanagement.view.CourseListAdapter
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_course_list.*
-import java.util.*
 
 class CourseListActivity : AppCompatActivity() {
 
@@ -29,9 +28,6 @@ class CourseListActivity : AppCompatActivity() {
         listAdapter = CourseListAdapter(this)
 
         realm = Realm.getDefaultInstance()
-        realm?.beginTransaction()
-        var course = realm?.createObject(Course::class.java, UUID.randomUUID().toString())
-        realm?.commitTransaction()
         reloadCourseList()
 
         binding.courseListView.adapter = listAdapter
