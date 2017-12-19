@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import develop.nappa.coursemanagement.R
-import develop.nappa.coursemanagement.databinding.ContentCourseListBinding
+import develop.nappa.coursemanagement.databinding.ActivityCourseListBinding
 import develop.nappa.coursemanagement.model.Course
 import develop.nappa.coursemanagement.view.CourseListAdapter
 import io.realm.Realm
@@ -21,10 +21,9 @@ class CourseListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_course_list)
         setSupportActionBar(toolbar)
 
-        val binding : ContentCourseListBinding = DataBindingUtil.setContentView(this, R.layout.content_course_list)
+        val binding : ActivityCourseListBinding = DataBindingUtil.setContentView(this, R.layout.activity_course_list)
         listAdapter = CourseListAdapter(this)
 
         realm = Realm.getDefaultInstance()
