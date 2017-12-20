@@ -8,7 +8,7 @@ import android.view.MenuItem
 import develop.nappa.coursemanagement.R
 import develop.nappa.coursemanagement.databinding.ActivityCourseListBinding
 import develop.nappa.coursemanagement.model.Course
-import develop.nappa.coursemanagement.view.CourseListAdapter
+import develop.nappa.coursemanagement.view.CourseRecyclerViewAdapter
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_course_list.*
@@ -17,22 +17,17 @@ class CourseListActivity : AppCompatActivity() {
 
     private var realm: Realm? = null
     private var courseList = mutableListOf<Course>()
-    private var listAdapter: CourseListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_course_list)
         setSupportActionBar(toolbar)
-
-        val binding : ActivityCourseListBinding = DataBindingUtil.setContentView(this, R.layout.activity_course_list)
-        listAdapter = CourseListAdapter(this)
 
         realm = Realm.getDefaultInstance()
         reloadCourseList()
 
-        binding.courseListView.adapter = listAdapter
-        binding.setOnItemClick { adapterView, view, position, l ->
-
-        }
+        val binding : ActivityCourseListBinding = DataBindingUtil.setContentView(this, R.layout.activity_course_list)
+        binding.courseRecyclerView.adapter = CourseRecyclerViewAdapter(courseList)
     }
 
     override fun onDestroy() {
@@ -49,7 +44,6 @@ class CourseListActivity : AppCompatActivity() {
                 courseList.add(course)
             }
         }
-        listAdapter?.courses = courseList
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
