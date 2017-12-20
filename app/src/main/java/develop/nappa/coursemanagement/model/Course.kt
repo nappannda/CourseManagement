@@ -39,4 +39,13 @@ open class Course : RealmObject() {
             Status.RETAKE -> "再履修"
         }
     }
+
+    fun initialize() {
+        name = ""
+        unit = 0
+        attendanceCount = 0
+        memo = ""
+        createdAt = Date()
+        updatedAt = Date()
+    }
 }

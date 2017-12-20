@@ -12,6 +12,7 @@ import develop.nappa.coursemanagement.view.CourseRecyclerViewAdapter
 import io.realm.Realm
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.activity_course_list.*
+import java.util.*
 
 class CourseListActivity : AppCompatActivity() {
 
@@ -28,6 +29,7 @@ class CourseListActivity : AppCompatActivity() {
 
         val binding : ActivityCourseListBinding = DataBindingUtil.setContentView(this, R.layout.activity_course_list)
         binding.courseRecyclerView.adapter = CourseRecyclerViewAdapter(courseList)
+        binding.courseList = this
     }
 
     override fun onDestroy() {
@@ -59,6 +61,16 @@ class CourseListActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun addCourse() {
+        val _realm = realm
+        if (_realm != null) {
+            _realm.beginTransaction()
+            val course = _realm.createObject(Course::class.java, UUID.randomUUID().toString())
+            course.initialize()
+            _realm.commitTransaction()
         }
     }
 }
