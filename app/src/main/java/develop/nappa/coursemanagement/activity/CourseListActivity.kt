@@ -29,7 +29,9 @@ class CourseListActivity : AppCompatActivity() {
         reloadCourseList()
 
         val binding : ActivityCourseListBinding = DataBindingUtil.setContentView(this, R.layout.activity_course_list)
-        binding.courseRecyclerView.adapter = CourseRecyclerViewAdapter(courseList)
+        binding.courseRecyclerView.adapter = CourseRecyclerViewAdapter(courseList) { course ->
+            moveDetailActivity(course.id)
+        }
         binding.courseList = this
     }
 
@@ -72,9 +74,13 @@ class CourseListActivity : AppCompatActivity() {
             val course = _realm.createObject(Course::class.java, UUID.randomUUID().toString())
             course.initialize()
             _realm.commitTransaction()
-            val intent = Intent(this, CourseDetailActivity::class.java)
-            intent.putExtra("id", course.id)
-            startActivity(intent)
+            moveDetailActivity(course.id)
         }
+    }
+
+    private fun moveDetailActivity(id: String) {
+        val intent = Intent(this, CourseDetailActivity::class.java)
+        intent.putExtra("id", id)
+        startActivity(intent)
     }
 }
