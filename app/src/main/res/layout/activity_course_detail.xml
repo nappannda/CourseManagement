@@ -6,6 +6,9 @@
         <variable
             name="course"
             type="develop.nappa.coursemanagement.model.Course" />
+        <variable
+            name="courseDetail"
+            type="develop.nappa.coursemanagement.activity.CourseDetailActivity" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -33,6 +36,7 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:textSize="24sp"
+            android:onTextChanged="@{(text, start, before, count) -> courseDetail.courseNameTextChanged(text)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/course_name_text"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -58,6 +62,7 @@
             android:ems="10"
             android:inputType="number"
             android:textSize="24sp"
+            android:onTextChanged="@{(text, start, before, count) -> courseDetail.unitTextChanged(text)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/unit_text"
             app:layout_constraintTop_toBottomOf="@+id/course_name_edit_text"/>
@@ -79,6 +84,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:text="@string/plus"
+            android:onClick="@{() -> courseDetail.plusAttendance()}"
             app:layout_constraintStart_toEndOf="@+id/attendance_count_text"
             app:layout_constraintTop_toBottomOf="@+id/unit_edit_text"/>
 
@@ -102,6 +108,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="32dp"
             android:text="@string/minus"
+            android:onClick="@{() -> courseDetail.minusAttendance()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/unit_edit_text"/>
 
@@ -127,6 +134,7 @@
             android:text="@{course.memo}"
             android:ems="10"
             android:inputType="textMultiLine"
+            android:onTextChanged="@{(text, start, before, count) -> courseDetail.memoTextChanged(text)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
