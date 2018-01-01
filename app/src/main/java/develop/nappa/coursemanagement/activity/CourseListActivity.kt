@@ -1,5 +1,6 @@
 package develop.nappa.coursemanagement.activity
 
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -71,6 +72,9 @@ class CourseListActivity : AppCompatActivity() {
             val course = _realm.createObject(Course::class.java, UUID.randomUUID().toString())
             course.initialize()
             _realm.commitTransaction()
+            val intent = Intent(this, CourseDetailActivity::class.java)
+            intent.putExtra("id", course.id)
+            startActivity(intent)
         }
     }
 }
