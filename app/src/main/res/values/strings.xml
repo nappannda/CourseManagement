@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">CourseManagement</string>
     <string name="action_settings">Settings</string>
+    <string name="course">科目名</string>
+    <string name="unit">単位数</string>
+    <string name="attendance_count">出席数</string>
+    <string name="plus">＋</string>
+    <string name="minus">−</string>
+    <string name="memo">メモ</string>
+    <string name="zero">0</string>
 </resources>
