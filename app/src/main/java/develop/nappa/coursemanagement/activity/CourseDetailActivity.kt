@@ -3,6 +3,9 @@ package develop.nappa.coursemanagement.activity
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import develop.nappa.coursemanagement.R
 import develop.nappa.coursemanagement.databinding.ActivityCourseDetailBinding
@@ -31,6 +34,23 @@ class CourseDetailActivity : AppCompatActivity() {
         course =  realm.where(Course::class.java).contains("id", id).findFirst()
         supportActionBar?.title = course?.name
         binding.course = course
+
+        var statusAdapter = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item)
+        for (status in course!!.status.statuses()) {
+            statusAdapter.add(status)
+        }
+        binding.statusSpinner.adapter = statusAdapter
+        binding.statusSpinner.setSelection(course!!.status.ordinal)
+        binding.statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, i: Int, l: Long) {
+                realm.beginTransaction()
+                course?.status = Course.Status.values().get(i)
+                realm.commitTransaction()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
     }
 
     override fun onDestroy() {

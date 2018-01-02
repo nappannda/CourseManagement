@@ -21,7 +21,15 @@ open class Course : RealmObject() {
         NONE("なし"),
         DOING("履修中"),
         ENROLLED("履修済み"),
-        RETAKE("再履修")
+        RETAKE("再履修");
+
+        open fun statuses() : List<String> {
+            var statuses = mutableListOf<String>()
+            Status.values().iterator().forEach { status: Status ->
+                statuses.add(status.stringValue)
+            }
+            return statuses.toList()
+        }
     }
 
     private var statusValue: String = Status.NONE.stringValue
