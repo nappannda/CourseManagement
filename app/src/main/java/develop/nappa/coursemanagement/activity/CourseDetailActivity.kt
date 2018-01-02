@@ -19,8 +19,7 @@ class CourseDetailActivity : AppCompatActivity() {
 
     private lateinit var realm: Realm
     private lateinit var binding: ActivityCourseDetailBinding
-
-    private var course: Course? = null
+    private lateinit var course: Course
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,20 +30,25 @@ class CourseDetailActivity : AppCompatActivity() {
         binding.courseDetail = this
 
         val id = intent.getStringExtra("id")
-        course =  realm.where(Course::class.java).contains("id", id).findFirst()
-        supportActionBar?.title = course?.name
+        val _course = realm.where(Course::class.java).contains("id", id).findFirst()
+        if (_course == null) {
+            Toast.makeText(this, resources.getText(R.string.not_found_course), Toast.LENGTH_SHORT).show()
+            finish()
+        }
+        course =  _course
+        supportActionBar?.title = course.name
         binding.course = course
 
-        var statusAdapter = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item)
-        for (status in course!!.status.statuses()) {
+        val statusAdapter = ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item)
+        for (status in course.status.statuses()) {
             statusAdapter.add(status)
         }
         binding.statusSpinner.adapter = statusAdapter
-        binding.statusSpinner.setSelection(course!!.status.ordinal)
+        binding.statusSpinner.setSelection(course.status.ordinal)
         binding.statusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, i: Int, l: Long) {
                 realm.beginTransaction()
-                course?.status = Course.Status.values().get(i)
+                course.status = Course.Status.values().get(i)
                 realm.commitTransaction()
             }
 
@@ -60,7 +64,7 @@ class CourseDetailActivity : AppCompatActivity() {
 
     fun courseNameTextChanged(text: CharSequence) {
         realm.beginTransaction()
-        course?.name = text.toString()
+        course.name = text.toString()
         realm.commitTransaction()
     }
 
@@ -74,31 +78,31 @@ class CourseDetailActivity : AppCompatActivity() {
             binding.unitEditText.setText("0")
         }
         realm.beginTransaction()
-        course?.unit = unit
+        course.unit = unit
         realm.commitTransaction()
     }
 
     fun memoTextChanged(text: CharSequence) {
         realm.beginTransaction()
-        course?.memo = text.toString()
+        course.memo = text.toString()
         realm.commitTransaction()
     }
 
     fun plusAttendance() {
         realm.beginTransaction()
-        course!!.attendanceCount = course!!.attendanceCount.inc()
+        course.attendanceCount = course.attendanceCount.inc()
         realm.commitTransaction()
-        binding.attendanceCountNumberText.setText(course!!.attendanceCount.toString())
+        binding.attendanceCountNumberText.setText(course.attendanceCount.toString())
     }
 
     fun minusAttendance() {
-        if (course!!.attendanceCount == 0) {
+        if (course.attendanceCount == 0) {
             Toast.makeText(this, resources.getText(R.string.attendance_count_zero), Toast.LENGTH_SHORT).show()
             return
         }
         realm.beginTransaction()
-        course!!.attendanceCount = course!!.attendanceCount.dec()
+        course.attendanceCount = course.attendanceCount.dec()
         realm.commitTransaction()
-        binding.attendanceCountNumberText.setText(course!!.attendanceCount.toString())
+        binding.attendanceCountNumberText.setText(course.attendanceCount.toString())
     }
 }
