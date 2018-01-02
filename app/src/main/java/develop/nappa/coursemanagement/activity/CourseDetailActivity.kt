@@ -70,7 +70,7 @@ class CourseDetailActivity : AppCompatActivity() {
             unit = text.toString().toInt()
         }
         catch (e: NumberFormatException) {
-            Toast.makeText(this, "数字を入力してください", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, resources.getText(R.string.input_number_text), Toast.LENGTH_SHORT).show()
             binding.unitEditText.setText("0")
         }
         realm.beginTransaction()
@@ -93,7 +93,7 @@ class CourseDetailActivity : AppCompatActivity() {
 
     fun minusAttendance() {
         if (course!!.attendanceCount == 0) {
-            Toast.makeText(this, "出席数を0未満に設定することは出来ません", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, resources.getText(R.string.attendance_count_zero), Toast.LENGTH_SHORT).show()
             return
         }
         realm.beginTransaction()

@@ -4,8 +4,11 @@
     <string name="course">科目名</string>
     <string name="unit">単位数</string>
     <string name="attendance_count">出席数</string>
+    <string name="status">出席状況</string>
     <string name="plus">＋</string>
     <string name="minus">−</string>
     <string name="memo">メモ</string>
     <string name="zero">0</string>
+    <string name="input_number_text">数字を入力してください</string>
+    <string name="attendance_count_zero">出席数を0未満に設定することは出来ません</string>
 </resources>
